@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+    version: 1.0.0
+    title: Backend Development API
+    description: Receipt api
+servers:
+    - url: https://receptapi.onrender.com/api
+paths:
+    /recept:
+        get:
+            description: Returns a array of receipt
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: integer
+                                        date:
+                                            type: string
+                                        amount:
+                                            type: string
+                                        shop:
+                                            type: string
+                                        category:
+                                            type: string
+                "500":
+                    $ref: "#/components/responses/500Error"
+        post:
+            description: Creates a new receipt
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                date:
+                                    type: string
+                                amount:
+                                    type: string
+                                shop:
+                                    type: string
+                                category:
+                                    type: string
+            responses:
+                "201":
+                    description: Created succesfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                    date:
+                                        type: string
+                                    amount:
+                                        type: string
+                                    shop:
+                                        type: string
+                                    category:
+                                        type: string
+                "400":
+                    $ref: "#/components/responses/400Error"
+                "404":
+                    $ref: "#/components/responses/404Error"
+                "500":
+                    $ref: "#/components/responses/500Error"
+
+    /recept/{id}:
+        put:
+            description: Updates an eisting receipt
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                date:
+                                    type: string
+                                amount:
+                                    type: string
+                                shop:
+                                    type: string
+                                category:
+                                    type: string
+            responses:
+                "200":
+                    description: Updated succesfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Receipt"
+                "400":
+                    $ref: "#/components/responses/400Error"
+                "404":
+                    $ref: "#/components/responses/404Error"
+                "500":
+                    $ref: "#/components/responses/500Error"
+
+        delete:
+            description: Delete a  specific receipt
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                "200":
+                    description: Receipt deleted
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: Receipt deleted
+
+    /recept/sorted:
+        get:
+            description: You can get information about a specific receipt
+            parameters:
+                - name: id
+                  in: query
+                  required: false
+                  schema:
+                      type: integer
+                - name: amount
+                  in: query
+                  required: false
+                  schema:
+                      type: string
+                - name: shop
+                  in: query
+                  required: false
+                  schema:
+                      type: string
+                - name: category
+                  in: query
+                  required: false
+                  schema:
+                      type: string
+                - name: date
+                  in: query
+                  required: false
+                  schema:
+                      type: string
+
+            responses:
+                "200":
+                    description: Successfully returned a receipt
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Receipt"
+                "400":
+                    $ref: "#/components/responses/400Error"
+                "404":
+                    $ref: "#/components/responses/404Error"
+                "500":
+                    $ref: "#/components/responses/500Error"
+    /recept/month/{month}:
+        get:
+            description: Get receipts weher are specific month
+            parameters:
+                - name: month
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+
+            responses:
+                "200":
+                    description: Updated succesfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Receipt"
+
+components:
+    schemas:
+        Receipt:
+            type: object
+            properties:
+                id:
+                    type: integer
+                date:
+                    type: string
+                amount:
+                    type: string
+                shop:
+                    type: string
+                category:
+                    type: string
+
+    responses:
+        400Error:
+            description: Invalid request
+            content:
+                text/plain:
+                    schema:
+                        type: string
+                        example: Invalid value
+        404Error:
+            description: Not found
+            content:
+                text/plain:
+                    schema:
+                        type: string
+                        example: Not found
+        500Error:
+            description: Internal error
+            content:
+                text/plain:
+                    schema:
+                        type: string
+                        example: Internal error

@@ -1,0 +1,45 @@
+### GET
+GET https://receptapi.onrender.com/api/recept HTTP/1.1
+
+### GET
+GET https://receptapi.onrender.com/api/recept/sorted?id=4 HTTP/1.1
+
+### GET
+GET https://receptapi.onrender.com/api/recept/sorted?shop=cssfc HTTP/1.1
+
+### GET
+GET https://receptapi.onrender.com/api/recept/sorted?category=testi HTTP/1.1
+
+### GET
+GET https://receptapi.onrender.com/api/recept/sorted?date=2022-01-14 HTTP/1.1
+
+### GET
+GET https://receptapi.onrender.com/api/recept/month/January HTTP/1.1
+
+### GET
+GET https://receptapi.onrender.com/api/recept/order/testi HTTP/1.1
+
+###
+POST https://receptapi.onrender.com/api/recept/
+Content-Type: application/json
+
+{
+    "date": "2023-01-01",
+    "amount": 100.0,
+    "shop": "cssfc",
+    "category": "fvvs"
+}
+
+###
+PUT https://receptapi.onrender.com/api/recept/2
+Content-Type: application/json
+
+{
+    "date": "2021-01-01",
+    "amount": 100,
+    "shop": "ICA",
+    "category": "Mat"
+}
+
+###
+DELETE https://receptapi.onrender.com/api/recept/24 HTTP/1.1
